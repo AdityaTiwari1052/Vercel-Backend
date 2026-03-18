@@ -52,8 +52,7 @@ const allowedOrigins = [
   'http://localhost:8000',
   'http://localhost:3000',
   'http://127.0.0.1:3000',
-  'https://job-portal-v3b1.onrender.com',
-  'http://job-portal-v3b1.onrender.com'
+  'https://vercel-frontend-i3drjb8d4-aditya-tiwaris-projects-95786dfd.vercel.app/'
 ];
 
 // Configure CORS with enhanced security headers
@@ -236,7 +235,7 @@ app.use((req, res, next) => {
     "img-src 'self' data: https: http: blob:; " +
     "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://apis.google.com https://*.clerk.accounts.dev https://*.clerk.accounts.workers.dev https://*.clerk.dev https://*.clerk.vercel.com; " +
     "style-src 'self' 'unsafe-inline'; " +
-    "connect-src https://job-portal-v3b1.onrender.com http://localhost:8000 http://localhost:5173 https://api.cloudinary.com https://*.clerk.accounts.dev https://*.clerk.accounts.workers.dev https://*.clerk.dev https://*.clerk.vercel.com https://clerk-telemetry.com; " +
+    "connect-src https://vercel-frontend-i3drjb8d4-aditya-tiwaris-projects-95786dfd.vercel.app/ http://localhost:8000 http://localhost:5173 https://api.cloudinary.com https://*.clerk.accounts.dev https://*.clerk.accounts.workers.dev https://*.clerk.dev https://*.clerk.vercel.com https://clerk-telemetry.com; " +
     "frame-src 'self' https://accounts.google.com https://*.clerk.accounts.dev https://*.clerk.dev; " +
     "font-src 'self' data:; " +
     "media-src 'self' data: https: http:; " +
