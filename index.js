@@ -312,10 +312,8 @@ app.get('/api/v1/health', (req, res) => {
 });
 
 
-// Static files and SPA fallback (MUST BE LAST)
-app.use(express.static(path.join(__dirname, "..", "frontend", "dist")));
-app.get("*", (req, res) => {
-  res.sendFile(path.resolve(__dirname, "..", "frontend", "dist", "index.html"));
+app.get("/", (req, res) => {
+  res.json({ message: "Backend API running 🚀" });
 });
 
 const PORT = process.env.PORT || 8000;
