@@ -178,9 +178,7 @@ router.post('/signup', companyLogoUpload, async (req, res) => {
   }
 });
 
-// @route   POST /api/v1/recruiter/auth/login
-// @desc    Login recruiter
-// @access  Public
+
 router.post('/login', async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -192,7 +190,9 @@ router.post('/login', async (req, res) => {
         message: 'Please provide email and password'
       });
     }
-
+ router.get("/test", (req, res) => {
+  res.json({ message: "Recruiter auth working 🚀" });
+});
     // Check if recruiter exists and get password
     console.log('🔍 Login attempt for email:', email.trim().toLowerCase());
     const recruiter = await Recruiter.findOne({ email: email.trim().toLowerCase() }).select('+password');
