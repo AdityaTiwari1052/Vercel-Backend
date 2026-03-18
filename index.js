@@ -12,8 +12,10 @@ import recruiterAuthRoute from "./routes/recruiterAuth.route.js";
 import recruiterRoute from "./routes/recruiter.route.js";
 import webhookRoutes from './routes/webhook.route.js';
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-
+dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
 // Debug: Check if .env file is loaded
 console.log('🔧 Environment Variables Check:');
@@ -105,9 +107,10 @@ const corsOptions = {
 // Apply CORS with options as one of the first middleware
 app.use(cors(corsOptions));
 
-
+// Handle preflight requests
 app.options('*', cors(corsOptions));
 
+// Add headers before the routes are defined
 app.use(function (req, res, next) {
   // Allow from any origin
   const origin = req.headers.origin;
@@ -117,12 +120,13 @@ app.use(function (req, res, next) {
   
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
 
+  // Request headers you wish to allow
   res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type,authorization');
 
 
   res.setHeader('Access-Control-Allow-Credentials', true);
 
-  
+  // Pass to next layer of middleware
   next();
 });
 
@@ -230,7 +234,7 @@ app.use((req, res, next) => {
   next();
 });
 
-
+// Add security headers middleware
 app.use((req, res, next) => {
   // Set security headers
   // Relaxed security headers - removed COEP/CORP to allow external resource loading
