@@ -220,10 +220,7 @@ router.post('/login', async (req, res) => {
     console.log('✅ Email is verified, proceeding with password check');
 
     // Check password
-    console.log('🔐 Password check for recruiter:', recruiter._id);
-    console.log('📝 Password provided (length):', password.length);
-    console.log('💾 Stored hash starts with:', recruiter.password.substring(0, 10) + '...');
-
+   
     const isPasswordValid = await bcrypt.compare(password, recruiter.password);
     console.log('🔍 Password comparison result:', isPasswordValid);
 
@@ -249,9 +246,7 @@ router.post('/login', async (req, res) => {
   }
 });
 
-// @route   GET /api/v1/recruiter/auth/me
-// @desc    Get current recruiter profile
-// @access  Private
+
 router.get('/me', async (req, res) => {
   try {
     // Get token from header
@@ -374,9 +369,7 @@ router.post('/verify-otp', async (req, res) => {
   }
 });
 
-// @route   POST /api/v1/recruiter/auth/forgot-password
-// @desc    Send password reset email to recruiter
-// @access  Public
+
 router.post('/forgot-password', async (req, res) => {
   try {
     const { email } = req.body;
@@ -476,9 +469,7 @@ router.post('/forgot-password', async (req, res) => {
   }
 });
 
-// @route   POST /api/v1/recruiter/auth/reset-password
-// @desc    Reset recruiter password using token
-// @access  Public
+
 router.post('/reset-password', async (req, res) => {
   try {
     const { token, password, passwordConfirm } = req.body;

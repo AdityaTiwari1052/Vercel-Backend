@@ -12,7 +12,7 @@ import jwtAuth from "../middlewares/jwtAuth.js";
 const router = express.Router();
 
 // Public routes
-router.get("/all", getAllJobs);
+router.get("/", getAllJobs);
 router.get("/:id", getJobById);
 
 // Protected routes (require recruiter authentication)
