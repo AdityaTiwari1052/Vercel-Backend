@@ -17,7 +17,7 @@
   "license": "ISC",
   "dependencies": {
     "@clerk/backend": "^2.9.1",
-    "@clerk/express": "^1.7.21",
+    "@clerk/express": "^1.7.76",
     "axios": "^1.8.4",
     "bcryptjs": "^2.4.3",
     "cloudinary": "^2.6.0",
