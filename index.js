@@ -52,7 +52,7 @@ const allowedOrigins = [
   'http://localhost:8000',
   'http://localhost:3000',
   'http://127.0.0.1:3000',
-  'https://vercel-frontend-i3drjb8d4-aditya-tiwaris-projects-95786dfd.vercel.app'
+  'https://vercel-frontend-pi-steel.vercel.app'
 ];
 
 // Configure CORS with enhanced security headers
@@ -282,14 +282,6 @@ app.use((err, req, res, next) => {
 });
 
 
-// Health check endpoint
-app.get('/api/v1/health', (req, res) => {
-  res.status(200).json({
-    status: 'ok',
-    timestamp: new Date().toISOString(),
-    environment: process.env.NODE_ENV || 'development'
-  });
-});
 
 
 app.get("/", (req, res) => {
