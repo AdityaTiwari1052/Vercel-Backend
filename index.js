@@ -20,10 +20,9 @@ dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
 const app = express();
 
-// ================= WEBHOOK =================
+
 app.use('/api/webhook', webhookRoutes);
 
-// ================= BODY PARSER =================
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
@@ -46,10 +45,9 @@ app.use(cors({
   credentials: true
 }));
 
-// ================= CLERK =================
+
 app.use(clerkMiddleware());
 
-// ================= REQUEST LOGGER (FIXED) =================
 app.use((req, res, next) => {
 
   if (req.originalUrl.startsWith('/api/')) {
@@ -63,7 +61,7 @@ app.use((req, res, next) => {
   next();
 });
 
-// ================= ROUTES =================
+
 app.get("/", (req, res) => {
   res.json({ message: "Backend API running 🚀" });
 });
@@ -73,7 +71,7 @@ app.use("/api/v1/jobs", jobRoute);
 app.use("/api/v1/recruiter/auth", recruiterAuthRoute);
 app.use("/api/v1/recruiter", recruiterRoute);
 
-// ================= ERROR HANDLER =================
+
 app.use((err, req, res, next) => {
   console.error(err);
 
@@ -83,7 +81,6 @@ app.use((err, req, res, next) => {
   });
 });
 
-// ================= SERVER =================
 const PORT = process.env.PORT || 8000;
 
 const startServer = async () => {

@@ -11,38 +11,58 @@ export const getAllJobs = async (req, res) => {
 
     let query = {};
 
-    // Build search query with OR logic for filters
-    let orConditions = [];
+    // If no filters are applied, return all jobs
+    if (!keyword && !categoryParam && !locationParam) {
+      const jobs = await Job.find({}).sort({ createdAt: -1 });
+      return res.status(200).json({
+        success: true,
+        jobs
+      });
+    }
+
+    // Build query for filtered results
+    let conditions = [];
 
     // Add keyword search conditions
     if (keyword) {
-      orConditions.push(
-        { title: { $regex: keyword, $options: "i" } },
-        { description: { $regex: keyword, $options: "i" } },
-        { companyName: { $regex: keyword, $options: "i" } },
-        { skills: { $in: [new RegExp(keyword, 'i')] } }
-      );
+      conditions.push({
+        $or: [
+          { title: { $regex: keyword, $options: "i" } },
+          { description: { $regex: keyword, $options: "i" } },
+          { companyName: { $regex: keyword, $options: "i" } },
+          { category: { $regex: keyword, $options: "i" } },
+          { skills: { $in: [new RegExp(keyword, 'i')] } }
+        ]
+      });
     }
 
-    // Add category filters to OR conditions (support multiple categories)
+    // Add category filters
     if (categoryParam) {
       const categories = categoryParam.split(',').filter(cat => cat.trim());
-      categories.forEach(category => {
-        orConditions.push({ category: category.trim() });
-      });
+      if (categories.length > 0) {
+        conditions.push({
+          $or: categories.map(category => ({
+            category: { $regex: category.trim(), $options: "i" }
+          }))
+        });
+      }
     }
 
-    // Add location filters to OR conditions (support multiple locations)
+    // Add location filters
     if (locationParam) {
       const locations = locationParam.split(',').filter(loc => loc.trim());
-      locations.forEach(location => {
-        orConditions.push({ location: location.trim() });
-      });
+      if (locations.length > 0) {
+        conditions.push({
+          $or: locations.map(location => ({
+            location: { $regex: location.trim(), $options: "i" }
+          }))
+        });
+      }
     }
 
-    // If we have OR conditions, use them
-    if (orConditions.length > 0) {
-      query.$or = orConditions;
+    // Use AND logic to combine different filter types
+    if (conditions.length > 0) {
+      query.$and = conditions;
     }
 
     const jobs = await Job.find(query).sort({ createdAt: -1 });
